@@ -82,7 +82,9 @@ function Text({ style, ...nativeProps }: TextProps) {
       .filter(t => typeof t === 'string' || typeof t === 'number')
       .join('');
     nativeProps.text = unicodeToChar(text);
-    nativeProps.children = nativeProps.text;
+    if (nativeProps.text) {
+      nativeProps.children = nativeProps.text;
+    }
   }
 
   return (
