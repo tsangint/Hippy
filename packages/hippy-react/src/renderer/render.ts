@@ -5,34 +5,100 @@ import Hippy from '@localTypes/hippy';
 import ViewNode from '../dom/view-node';
 import Element from '../dom/element-node';
 import * as UIManagerModule from '../modules/ui-manager-module';
+import { Device } from '../global';
 import { getRootViewId, getRootContainer } from '../utils/node';
 import { trace, warn } from '../utils';
 
-
-interface Style {
-  [key: string]: null | string | number | number[];
-}
-
 const componentName = ['%c[native]%c', 'color: red', 'color: auto'];
 
-let __batchIdle = true;
-let __renderId: number = 0;
+interface BatchType {
+  [key: string]: Symbol;
+}
+
+const NODE_OPERATION_TYPES: BatchType = {
+  createNode: Symbol('createNode'),
+  updateNode: Symbol('updateNode'),
+  deleteNode: Symbol('deleteNode'),
+};
+
+interface batchChunk {
+  type: Symbol,
+  nodes: Hippy.NativeNode[]
+}
+
+let __batchIdle: boolean = true;
+let __batchNodes: batchChunk[] = [];
+
+/**
+ * Convert an ordered node array into multiple fragments
+ */
+function chunkNodes(batchNodes: batchChunk[]) {
+  const result: batchChunk[] = [];
+  for (let i = 0; i < batchNodes.length; i += 1) {
+    const chunk: batchChunk = batchNodes[i];
+    const { type, nodes } = chunk;
+    const _chunk = result[result.length - 1];
+    if (!_chunk || _chunk.type !== type) {
+      result.push({
+        type,
+        nodes,
+      });
+    } else {
+      _chunk.nodes = _chunk.nodes.concat(nodes);
+    }
+  }
+  return result;
+}
 
 function startBatch() {
   if (__batchIdle) {
-    __renderId = Date.now();
-    UIManagerModule.startBatch(__renderId);
+    UIManagerModule.startBatch();
   }
 }
 
-function endBatch() {
-  if (__batchIdle) {
-    __batchIdle = false;
-    Promise.resolve().then(() => {
-      UIManagerModule.endBatch(__renderId);
-      __batchIdle = true;
-    });
+function endBatch(rootViewId) {
+  if (!__batchIdle) {
+    return;
   }
+  __batchIdle = false;
+  Promise.resolve().then(() => {
+    const chunks = chunkNodes(__batchNodes);
+    chunks.forEach((chunk) => {
+      switch (chunk.type) {
+        case NODE_OPERATION_TYPES.createNode:
+          trace(...componentName, 'createNode', chunk.nodes);
+          UIManagerModule.createNode(rootViewId, chunk.nodes);
+          break;
+        case NODE_OPERATION_TYPES.updateNode:
+          trace(...componentName, 'updateNode', chunk.nodes);
+          // FIXME: iOS should be able to update mutiple nodes at once.
+          if (__PLATFORM__ === 'ios' || Device.platform.OS === 'ios') {
+            chunk.nodes.forEach(node => (
+              UIManagerModule.updateNode(rootViewId, [node])
+            ));
+          } else {
+            UIManagerModule.updateNode(rootViewId, chunk.nodes);
+          }
+          break;
+        case NODE_OPERATION_TYPES.deleteNode:
+          trace(...componentName, 'deleteNode', chunk.nodes);
+          // FIXME: iOS should be able to delete mutiple nodes at once.
+          if (__PLATFORM__ === 'ios' || Device.platform.OS === 'ios') {
+            chunk.nodes.forEach(node => (
+              UIManagerModule.deleteNode(rootViewId, [node])
+            ));
+          } else {
+            UIManagerModule.deleteNode(rootViewId, chunk.nodes);
+          }
+          break;
+        default:
+          // pass
+      }
+    });
+    UIManagerModule.endBatch();
+    __batchNodes = [];
+    __batchIdle = true;
+  });
 }
 
 /**
@@ -111,10 +177,12 @@ function insertChild(parentNode: ViewNode, childNode: ViewNode, atIndex = -1) {
   if (isLayout(parentNode) && !parentNode.isMounted) {
     // Start real native work.
     const translated = renderToNativeWithChildren(rootViewId, childNode);
-    trace(...componentName, 'insertChild layout', translated);
     startBatch();
-    UIManagerModule.createNode(rootViewId, translated);
-    endBatch();
+    __batchNodes.push({
+      type: NODE_OPERATION_TYPES.createNode,
+      nodes: translated,
+    });
+    endBatch(rootViewId);
     parentNode.traverseChildren((node: ViewNode) => {
       if (!node.isMounted) {
         node.isMounted = true;
@@ -123,10 +191,12 @@ function insertChild(parentNode: ViewNode, childNode: ViewNode, atIndex = -1) {
   // Render others child nodes.
   } else if (parentNode.isMounted && !childNode.isMounted) {
     const translated = renderToNativeWithChildren(rootViewId, childNode);
-    trace(...componentName, 'insertChild child', translated);
     startBatch();
-    UIManagerModule.createNode(rootViewId, translated);
-    endBatch();
+    __batchNodes.push({
+      type: NODE_OPERATION_TYPES.createNode,
+      nodes: translated,
+    });
+    endBatch(rootViewId);
     childNode.traverseChildren((node: ViewNode) => {
       if (!node.isMounted) {
         node.isMounted = true;
@@ -151,10 +221,12 @@ function removeChild(parentNode: ViewNode, childNode: ViewNode) {
     pId: childNode.parentNode ? childNode.parentNode.nodeId : rootViewId,
     index: childNode.index,
   }];
-  trace(...componentName, 'deleteNode', deleteNodeIds);
   startBatch();
-  UIManagerModule.deleteNode(rootViewId, deleteNodeIds);
-  endBatch();
+  __batchNodes.push({
+    type: NODE_OPERATION_TYPES.deleteNode,
+    nodes: deleteNodeIds,
+  });
+  endBatch(rootViewId);
 }
 
 function updateChild(parentNode: Element) {
@@ -163,10 +235,14 @@ function updateChild(parentNode: Element) {
   }
   const rootViewId = getRootViewId();
   const translated = renderToNative(rootViewId, parentNode);
-  trace(...componentName, 'updateNode', translated);
   startBatch();
-  UIManagerModule.updateNode(rootViewId, [translated]);
-  endBatch();
+  if (translated) {
+    __batchNodes.push({
+      type: NODE_OPERATION_TYPES.updateNode,
+      nodes: [translated],
+    });
+  }
+  endBatch(rootViewId);
 }
 
 function updateWithChildren(parentNode: ViewNode) {
@@ -175,12 +251,12 @@ function updateWithChildren(parentNode: ViewNode) {
   }
   const rootViewId = getRootViewId();
   const translated = renderToNativeWithChildren(rootViewId, parentNode);
-  trace(...componentName, 'updateWithChildren', translated);
   startBatch();
-  translated.forEach((item) => {
-    UIManagerModule.updateNode(rootViewId, [item]);
+  __batchNodes.push({
+    type: NODE_OPERATION_TYPES.updateNode,
+    nodes: translated,
   });
-  endBatch();
+  endBatch(rootViewId);
 }
 
 export {
