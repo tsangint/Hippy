@@ -34,11 +34,11 @@ android {
             minifyEnabled false
         }
     }
-//    externalNativeBuild {
-//        cmake {
-//            path file('../../../android/sdk/src/main/jni/armeabi-v7a/CMakeLists.txt')
-//        }
-//    }
+    externalNativeBuild {
+        cmake {
+            path file('./src/main/cpp/CMakeLists.txt')
+        }
+    }
 }
 
 dependencies {
