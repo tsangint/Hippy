@@ -59,5 +59,5 @@ void TestModule::Log(const hippy::napi::CallbackInfo& info) {
       HIPPY_LOG(hippy::Debug, log_msg);
   }
 
-  info.GetReturnValue()->SetUndefined();
+  info.GetReturnValue()->Set(context->CreateBoolean(true));
 }
