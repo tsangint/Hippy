@@ -41,6 +41,8 @@ export default class App extends Component {
     this.state = ({
       pageIndex: 0,
     });
+
+    console.log("TestModule: ", global.TestModule);
   }
 
   render() {
