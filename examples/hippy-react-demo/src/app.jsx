@@ -43,6 +43,7 @@ export default class App extends Component {
     });
 
     console.log("TestModule: ", global.TestModule);
+    console.log("TestModule return: ", global.TestModule.Log("TestModule test"));
   }
 
   render() {

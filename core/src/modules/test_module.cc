@@ -2,6 +2,7 @@
 #include "core/modules/test_module.h"
 #include "core/napi/js_native_api.h"
 #include "core/base/logging.h"
+#include "v8/v8.h"
 
 REGISTER_MODULE(TestModule, Log)
 
@@ -58,6 +59,8 @@ void TestModule::Log(const hippy::napi::CallbackInfo& info) {
     else
       HIPPY_LOG(hippy::Debug, log_msg);
   }
+
+  v8::Promise *promise = v8::Promise();
 
   info.GetReturnValue()->Set(context->CreateBoolean(true));
 }
