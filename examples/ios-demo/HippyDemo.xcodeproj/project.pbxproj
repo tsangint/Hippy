@@ -139,6 +139,10 @@
 		06FF8BD62511BC0400C03900 /* HippyImageProviderProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FF8BD52511BC0400C03900 /* HippyImageProviderProtocol.m */; };
 		06FF8EEC2511C10B00C03900 /* HippyDefaultImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FF8EEB2511C10B00C03900 /* HippyDefaultImageProvider.m */; };
 		06FF8EEF2511C20900C03900 /* NSData+DataType.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FF8EEE2511C20900C03900 /* NSData+DataType.m */; };
+		58B0C46C269DD9A5003714B7 /* UIView+FindUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B0C467269DD9A5003714B7 /* UIView+FindUIViewController.m */; };
+		58B0C46D269DD9A5003714B7 /* RCTVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B0C469269DD9A5003714B7 /* RCTVideoManager.m */; };
+		58B0C46E269DD9A5003714B7 /* RCTVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B0C46A269DD9A5003714B7 /* RCTVideoPlayerViewController.m */; };
+		58B0C46F269DD9A5003714B7 /* RCTVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B0C46B269DD9A5003714B7 /* RCTVideo.m */; };
 		85BCD4572578C58000638DB4 /* scope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD4152578C58000638DB4 /* scope.cc */; };
 		85BCD4582578C58000638DB4 /* engine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD4162578C58000638DB4 /* engine.cc */; };
 		85BCD4592578C58000638DB4 /* logging_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD4182578C58000638DB4 /* logging_impl.cc */; };
@@ -460,6 +464,15 @@
 		06FF8EEB2511C10B00C03900 /* HippyDefaultImageProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HippyDefaultImageProvider.m; sourceTree = "<group>"; };
 		06FF8EED2511C20900C03900 /* NSData+DataType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+DataType.h"; sourceTree = "<group>"; };
 		06FF8EEE2511C20900C03900 /* NSData+DataType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+DataType.m"; sourceTree = "<group>"; };
+		58B0C463269DD9A5003714B7 /* RCTVideoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTVideoManager.h; path = "../../../../../media-player/hippy-player/ios/RCTVideoManager.h"; sourceTree = "<group>"; };
+		58B0C464269DD9A5003714B7 /* RCTVideoPlayerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTVideoPlayerViewControllerDelegate.h; path = "../../../../../media-player/hippy-player/ios/RCTVideoPlayerViewControllerDelegate.h"; sourceTree = "<group>"; };
+		58B0C465269DD9A5003714B7 /* RCTVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTVideoPlayerViewController.h; path = "../../../../../media-player/hippy-player/ios/RCTVideoPlayerViewController.h"; sourceTree = "<group>"; };
+		58B0C466269DD9A5003714B7 /* UIView+FindUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+FindUIViewController.h"; path = "../../../../../media-player/hippy-player/ios/UIView+FindUIViewController.h"; sourceTree = "<group>"; };
+		58B0C467269DD9A5003714B7 /* UIView+FindUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+FindUIViewController.m"; path = "../../../../../media-player/hippy-player/ios/UIView+FindUIViewController.m"; sourceTree = "<group>"; };
+		58B0C468269DD9A5003714B7 /* RCTVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCTVideo.h; path = "../../../../../media-player/hippy-player/ios/RCTVideo.h"; sourceTree = "<group>"; };
+		58B0C469269DD9A5003714B7 /* RCTVideoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTVideoManager.m; path = "../../../../../media-player/hippy-player/ios/RCTVideoManager.m"; sourceTree = "<group>"; };
+		58B0C46A269DD9A5003714B7 /* RCTVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTVideoPlayerViewController.m; path = "../../../../../media-player/hippy-player/ios/RCTVideoPlayerViewController.m"; sourceTree = "<group>"; };
+		58B0C46B269DD9A5003714B7 /* RCTVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCTVideo.m; path = "../../../../../media-player/hippy-player/ios/RCTVideo.m"; sourceTree = "<group>"; };
 		85BCD3EC2578C57F00638DB4 /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
 		85BCD3ED2578C57F00638DB4 /* core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		85BCD3EF2578C57F00638DB4 /* logging_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging_impl.h; sourceTree = "<group>"; };
@@ -581,6 +594,7 @@
 		0612F02023A8BE320079E622 /* HippyDemo */ = {
 			isa = PBXGroup;
 			children = (
+				58B0C462269DD923003714B7 /* video */,
 				067AB97023B5F309009D5EE2 /* myview */,
 				067AB96E23B5EEF3009D5EE2 /* TestModule.h */,
 				067AB96D23B5EEF3009D5EE2 /* TestModule.m */,
@@ -1151,6 +1165,22 @@
 			path = myview;
 			sourceTree = "<group>";
 		};
+		58B0C462269DD923003714B7 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				58B0C468269DD9A5003714B7 /* RCTVideo.h */,
+				58B0C46B269DD9A5003714B7 /* RCTVideo.m */,
+				58B0C463269DD9A5003714B7 /* RCTVideoManager.h */,
+				58B0C469269DD9A5003714B7 /* RCTVideoManager.m */,
+				58B0C465269DD9A5003714B7 /* RCTVideoPlayerViewController.h */,
+				58B0C46A269DD9A5003714B7 /* RCTVideoPlayerViewController.m */,
+				58B0C464269DD9A5003714B7 /* RCTVideoPlayerViewControllerDelegate.h */,
+				58B0C466269DD9A5003714B7 /* UIView+FindUIViewController.h */,
+				58B0C467269DD9A5003714B7 /* UIView+FindUIViewController.m */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		85BCD3BC2578C57F00638DB4 /* core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1445,8 +1475,10 @@
 				064C5A4E23AB1A51001E80DD /* HippyBatchedBridge.mm in Sources */,
 				064C59FE23AB1A51001E80DD /* HippyDevMenu.mm in Sources */,
 				064C5A2F23AB1A51001E80DD /* HippyNavigationControllerAnimator.m in Sources */,
+				58B0C46E269DD9A5003714B7 /* RCTVideoPlayerViewController.m in Sources */,
 				06F2A76F2519E319000AF839 /* HippyJSEnginesMapper.mm in Sources */,
 				064C5A1123AB1A51001E80DD /* HippyViewPagerItemManager.m in Sources */,
+				58B0C46D269DD9A5003714B7 /* RCTVideoManager.m in Sources */,
 				85BCD4652578C58000638DB4 /* task.cc in Sources */,
 				85BCD4572578C58000638DB4 /* scope.cc in Sources */,
 				064C5A0423AB1A51001E80DD /* HippyUIManager.mm in Sources */,
@@ -1467,6 +1499,7 @@
 				064C59EB23AB1A51001E80DD /* x5LayoutUtil.m in Sources */,
 				064C59F623AB1A51001E80DD /* HippyExtAnimationModule.m in Sources */,
 				85BCD46C2578C58000638DB4 /* js_native_jsc_helper.cc in Sources */,
+				58B0C46F269DD9A5003714B7 /* RCTVideo.m in Sources */,
 				06082A7A24AB222000AF85BC /* HippyFooterRefreshManager.m in Sources */,
 				064C5A2523AB1A51001E80DD /* HippyBaseListView.m in Sources */,
 				064C5A3923AB1A51001E80DD /* HippyModalCustomAnimationTransition.m in Sources */,
@@ -1506,6 +1539,7 @@
 				06082A7824AB222000AF85BC /* HippyHeaderRefreshManager.m in Sources */,
 				85BCD45F2578C58000638DB4 /* console_module.cc in Sources */,
 				064C5A3323AB1A51001E80DD /* HippyVirtualTextNode.m in Sources */,
+				58B0C46C269DD9A5003714B7 /* UIView+FindUIViewController.m in Sources */,
 				064C5A0E23AB1A51001E80DD /* HippyViewPager.m in Sources */,
 				064C5A2223AB1A51001E80DD /* HippyBaseListViewDataSource.m in Sources */,
 				064C5A1C23AB1A51001E80DD /* HippyImageView.m in Sources */,

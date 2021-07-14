@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
 } from '@hippy/react';
+import Video from "@tencent/hippy-player";
 
 const styles = StyleSheet.create({
   itemTitle: {
@@ -51,8 +52,11 @@ export default function ViewExpo() {
       {renderTitle('border props')}
       <View style={[styles.rectangle, { borderColor: '#242424', borderRadius: 4, borderWidth: 1 }]} />
       {renderTitle('flex props')}
+      <Video
+       source={{uri: "https://www.w3schools.com/html/mov_bbb.mp4"}}
+      ></Video>
       <View style={[styles.bigRectangle, {
-        flexDirection: 'row',
+        flexDirection: 'row', 
         alignItems: 'center',
         justifyContent: 'space-between',
       }]}
